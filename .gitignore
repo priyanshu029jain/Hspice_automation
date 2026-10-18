@@ -11,3 +11,4 @@ waveform/sim_data/
 *.lis
 top.sp
 sxcmd.log*
+LTspice

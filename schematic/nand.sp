@@ -48,11 +48,17 @@ V_VSS VSS 0 DC 'VSS_VAL'
 Cout OUT VSS 'Cload'
 
 * --- Transistor Netlist / Devices ---
-* Subcircuit / Transistor instances for nand
-MP1 imo IN VDD VDD PMOS L='L_mos' W='W_pmos'
-MN1 imo IN VSS VSS NMOS L='L_mos' W='W_nmos'
+* 2-input NAND: OUT = NOT(A AND B)
+*   Input A = IN   (driven by the analysis/*.sp stimulus)
+*   Input B = IN_B (held at VDD, the non-controlling value, so OUT responds to A)
+V_INB IN_B 0 DC 'VDD_VAL'
 
-MP2 OUT imo VDD VDD PMOS L='L_mos' W='W_pmos'
-MN2 OUT imo VSS VSS NMOS L='L_mos' W='W_nmos'
+* Pull-up network: two PMOS in parallel
+MPA OUT IN   VDD VDD PMOS L='L_mos' W='W_pmos'
+MPB OUT IN_B VDD VDD PMOS L='L_mos' W='W_pmos'
+
+* Pull-down network: two NMOS in series (2x width to match the inverter pull-down)
+MNA OUT IN   N1  VSS NMOS L='L_mos' W='2*W_nmos'
+MNB N1  IN_B VSS VSS NMOS L='L_mos' W='2*W_nmos'
 
 .END

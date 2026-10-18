@@ -17,7 +17,7 @@
 * Delay Skew |t_phl - t_plh|
 .MEASURE TRAN t_skew PARAM='abs(t_phl - t_plh)'
 
-* 2. Output Slew Rates (20% to 80% VDD thresholds)
+* 2. Output Slew Rates (10% to 90% VDD thresholds)
 .MEASURE TRAN fall_time 
 + TRIG V(OUT) VAL='VDD_VAL*0.9' FALL=1 
 + TARG V(OUT) VAL='VDD_VAL*0.1' FALL=1

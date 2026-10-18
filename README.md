@@ -133,7 +133,7 @@ Before deleting anything, `clean` lists the files it will remove, asks for y/n, 
 | `pseudo_pmos.sp`  | PMOS driver with a resistor pull-down                     |
 | `buffer_nmos.sp`  | NMOS source follower (common drain) with a resistive load |
 | `buffer_pmos.sp`  | PMOS source follower (common drain) with a resistive load |
-| `nand.sp`         | Created from the `open` template. *Currently two inverters in series; see Known Issues* |
+| `nand.sp`         | 2-input NAND: two parallel PMOS, two series NMOS (2�W<sub>n</sub>). Input A = `IN`, input B = `IN_B` held at V<sub>DD</sub> |
 
 All circuits use the same node names (`IN`, `OUT`, `VDD`, `VSS`) and the same parameter names (`VDD_VAL`, `VSS_VAL`, `W_nmos`, `W_pmos`, `L_mos`, `Cload`, `R_LOAD`). That is why any analysis or parameter file works with any circuit.
 
@@ -194,7 +194,5 @@ The full tables are in [`data/`](data/). Waveform screenshots (VTC, switching po
 ## Known Issues / TODO
 
 - **The corners currently have no effect.** The `corner/*.sp` files define `VTH_OFFSET_N/P` and `UTE_N/P_VAL`, but `65nm.pm` never uses these parameters. As a result, all five corners give identical results. To fix this, change the model so `vth0` and `ute` depend on them, for example `vth0 = '0.429 + VTH_OFFSET_N'`.
-- **`nand.sp` is not a NAND gate.** It is two inverters in series (a buffer). A real 2-input NAND needs two series NMOS, two parallel PMOS and a second input.
 - **The `format_measure.sh` table is wrong when a measurement fails.** HSPICE writes `failed` in place of the number. The AWK parser treats any line that does not start with a digit as a header line, so the columns get misaligned. This affects some `static`, `dynamic` and `noise` tables.
 - **`measure/dynamic.sp`:** `pdp` uses `t_pd`, which is only measured in `tran`, so PDP always fails in the `dynamic` analysis.
-- **`measure/tran.sp`:** the comment says slew is measured at 20–80%, but the code measures 10–90%.
