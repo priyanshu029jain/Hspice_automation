@@ -15,7 +15,7 @@ The `runall` command runs the same flow over many corners, parameters, circuits 
 ## Directory Structure
 
 ```
-invertor/
+Hspice_automation/
 ├── run                  # Run one simulation
 ├── runall               # Run a batch sweep (corner / param / schem / anal)
 ├── clean                # Delete raw simulation outputs (asks for confirmation and a passcode)
