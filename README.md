@@ -133,7 +133,7 @@ Before deleting anything, `clean` lists the files it will remove, asks for y/n, 
 | `pseudo_pmos.sp`  | PMOS driver with a resistor pull-down                     |
 | `buffer_nmos.sp`  | NMOS source follower (common drain) with a resistive load |
 | `buffer_pmos.sp`  | PMOS source follower (common drain) with a resistive load |
-| `nand.sp`         | 2-input NAND: two parallel PMOS, two series NMOS (2×W<sub>n</sub>). Input A = `IN`, input B = `IN_B` held at V<sub>DD</sub> |
+| `nand.sp`         | 2-input NAND: two parallel PMOS, two series NMOS (2Ã—W<sub>n</sub>). Input A = `IN`, input B = `IN_B` held at V<sub>DD</sub> |
 
 All circuits use the same node names (`IN`, `OUT`, `VDD`, `VSS`) and the same parameter names (`VDD_VAL`, `VSS_VAL`, `W_nmos`, `W_pmos`, `L_mos`, `Cload`, `R_LOAD`). That is why any analysis or parameter file works with any circuit.
 
