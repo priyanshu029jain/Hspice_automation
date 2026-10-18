@@ -1,0 +1,12 @@
+$DATA1 SOURCE='PrimeSim HSPICE' VERSION='U-2023.03 linux6' PARAM_COUNT=2
+.TITLE '* automated master netlist'
+ index            l_mos            max_gain         bw_3db          
+                  f_unity          temper           alter#          
+ 1                 6.500e-08         16.3440           failed       
+                   1.631e+10         25.0000        1               
+ 2                 9.000e-08          6.6383           failed       
+                   5.300e+09         25.0000        1               
+ 3                 1.300e-07       -8.008e-03          failed       
+                     failed          25.0000        1               
+ 4                 1.800e-07         -1.6722           failed       
+                     failed          25.0000        1               

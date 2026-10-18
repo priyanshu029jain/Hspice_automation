@@ -1,0 +1,5 @@
+vss_val    out_noise_1m  in_noise_1m  peak_onoise  total_out_noise  total_in_noise
+0.         1.177e-06     1.792e-07    3.711e-05    failed           1.238e+03
+5.000e-02  9.580e-07     1.581e-07    3.018e-05    failed           1.292e+03
+0.1000     3.047e-07     1.454e-07    9.567e-06    failed           1.620e+03
+0.1500     9.211e-08     1.324e-07    2.842e-06    failed           2.460e+03

@@ -1,0 +1,52 @@
+#!/bin/bash
+# ==============================================================================
+# Master Cleanup Orchestrator (Root)
+# Usage:
+#   ./clean target <schem> <analysis> <param> <corner>  -> Clean specific run
+#   ./clean latest                                      -> Clean latest run
+#   ./clean old [keep_count]                            -> Clean older runs
+#   ./clean all                                         -> Clean all raw outputs
+# ==============================================================================
+
+SCRIPT_DIR="./script/clean"
+MODE="${1}"
+
+# Handle missing mode or help request
+if [ -z "$MODE" ] || [ "$MODE" = "-h" ] || [ "$MODE" = "--help" ]; then
+    echo "======================================================================"
+    echo "                CMOS Workspace Cleanup Utility                        "
+    echo "======================================================================"
+    echo "Usage:"
+    echo "  ./clean latest                            Clean output of the latest run"
+    echo "  ./clean old [keep_count]                  Clean older runs (default keep: 1)"
+    echo "  ./clean all                               Purge ALL raw output binaries"
+    echo "  ./clean target <schem> <anal> <par> <cor> Clean a specific simulation target"
+    echo "  ./clean <schem> <anal> <par> <cor>        Shortcut for target cleanup"
+    echo "======================================================================"
+    exit 0
+fi
+
+case "$MODE" in
+    latest)
+        "$SCRIPT_DIR/clean_latest.sh"
+        ;;
+    old)
+        "$SCRIPT_DIR/clean_old.sh" "$2"
+        ;;
+    all)
+        "$SCRIPT_DIR/clean_all.sh"
+        ;;
+    target)
+        "$SCRIPT_DIR/clean_target.sh" "$2" "$3" "$4" "$5"
+        ;;
+    *)
+        # Allows shortcut usage: ./clean cmos tran vdd ss
+        if [ $# -eq 4 ]; then
+            "$SCRIPT_DIR/clean_target.sh" "$1" "$2" "$3" "$4"
+        else
+            echo "[!] Invalid command or incomplete target specifications."
+            echo "    Run './clean --help' for usage instructions."
+            exit 1
+        fi
+        ;;
+esac

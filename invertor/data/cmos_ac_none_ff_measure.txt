@@ -1,0 +1,2 @@
+dc_gain  bandwidth_3db  f_unity    phase_at_3db
+16.3440  2.493e+09      1.631e+10  134.3655

@@ -1,0 +1,53 @@
+#!/bin/bash
+# ==============================================================================
+# Master Batch Characterization Orchestrator (Root)
+# Usage: ./runall <mode> [arguments...]
+# ==============================================================================
+
+SCRIPT_DIR="./script/runall"
+MODE="$1"
+
+show_help() {
+    echo "======================================================================"
+    echo "              HSPICE Automated Batch Characterization                 "
+    echo "======================================================================"
+    echo "Usage Modes:"
+    echo "  1. Corner Sweep (Sweeps tt, ff, ss, sf, fs):"
+    echo "     ./runall corner <schematic> <analysis> <parameter>"
+    echo ""
+    echo "  2. Parameter Sweep:"
+    echo "     ./runall param <schematic> <analysis> <corner> <param1> <param2> ..."
+    echo ""
+    echo "  3. Schematic Sweep:"
+    echo "     ./runall schem <analysis> <parameter> <corner> <schem1> <schem2> ..."
+    echo ""
+    echo "  4. Analysis Mode Sweep:"
+    echo "     ./runall anal <schematic> <parameter> <corner> <analysis1> <analysis2> ..."
+    echo "======================================================================"
+    exit 0
+}
+
+if [ -z "$MODE" ] || [ "$MODE" = "-h" ] || [ "$MODE" = "--help" ]; then
+    show_help
+fi
+
+# Route to the target module script
+shift 1
+case "$MODE" in
+    corner)
+        source "$SCRIPT_DIR/sweep_corner.sh" "$@"
+        ;;
+    param)
+        source "$SCRIPT_DIR/sweep_param.sh" "$@"
+        ;;
+    schem)
+        source "$SCRIPT_DIR/sweep_schem.sh" "$@"
+        ;;
+    anal)
+        source "$SCRIPT_DIR/sweep_anal.sh" "$@"
+        ;;
+    *)
+        echo "[!] Invalid mode '$MODE'."
+        show_help
+        ;;
+esac

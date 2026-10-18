@@ -1,0 +1,97 @@
+#!/bin/bash
+# ==============================================================================
+# CLI Utility: Open or Create a Complete Testbench-Ready Netlist
+# Features: Built-in HSPICE Syntax Cheat Sheet + gedit (MobaXterm GUI) Support
+# Usage: ./open <schematic_name>
+# Example: ./open nand
+# ==============================================================================
+
+SCHEM_DIR="./schematic"
+mkdir -p "$SCHEM_DIR"
+
+if [ -z "$1" ]; then
+    echo "[!] Error: Schematic name missing."
+    echo "    Usage: ./open <schematic_name>"
+    echo "    Example: ./open nand"
+    exit 1
+fi
+
+SCHEM_NAME="$1"
+TARGET_FILE="$SCHEM_DIR/${SCHEM_NAME}.sp"
+
+# Generate template if file does not exist
+if [ ! -f "$TARGET_FILE" ]; then
+    cat << EOF > "$TARGET_FILE"
+* ==============================================================================
+* Schematic: ${SCHEM_NAME}
+* Auto-generated CLI Characterization Template
+* ==============================================================================
+*
+* ------------------------------------------------------------------------------
+* HSPICE COMPONENT SYNTAX CHEAT SHEET
+* ------------------------------------------------------------------------------
+*  MOSFET:     M<name> Drain Gate Source Body ModelName L=val W=val
+*              Example: M1 OUT IN VSS VSS NMOS L='L_mos' W='W_nmos'
+*
+*  RESISTOR:   R<name> Node1 Node2 Value
+*              Example: R1 OUT VSS 10K
+*
+*  CAPACITOR:  C<name> Node1 Node2 Value
+*              Example: C1 OUT VSS 1FF
+*
+*  INDUCTOR:   L<name> Node1 Node2 Value
+*              Example: L1 IN1 IN2 1N
+*
+*  DC SOURCE:  V<name> Node(+) Node(-) DC Value
+*              Example: VVDD VDD 0 DC 1.0
+*
+*  PULSE SRC:  V<name> N(+) N(-) PULSE(V1 V2 Delay Rise Fall Width Period)
+*              Example: VIN IN 0 PULSE(0 1.0 0p 10p 10p 500p 1000p)
+*
+*  SUBCIRCUIT: X<name> Node1 Node2 ... NodeN SubcktName
+*              Example: XINV1 VDD VSS IN OUT CMOS_INVERTER
+* ------------------------------------------------------------------------------
+
+* Process & Global Parameters
+.PARAM VDD_VAL = 1.0
+.PARAM VSS_VAL = 0.0
+.PARAM W_pmos  = 130N
+.PARAM W_nmos  = 65N
+.PARAM L_mos   = 65N
+.PARAM Cload   = 1ff
+.PARAM R_LOAD  = 10K
+
+* Include Process Model File
+.INCLUDE '../65nm.pm'
+
+* Independent Power Supply Sources
+V_VDD VDD 0 DC 'VDD_VAL'
+V_VSS VSS 0 DC 'VSS_VAL'
+
+* Output Load Capacitance
+Cout OUT VSS 'Cload'
+
+* --- Transistor Netlist / Devices ---
+* Subcircuit / Transistor instances for ${SCHEM_NAME}
+MP1 OUT IN VDD VDD PMOS L='L_mos' W='W_pmos'
+MN1 OUT IN VSS VSS NMOS L='L_mos' W='W_nmos'
+
+.END
+EOF
+    echo "[+] Generated testbench template: $TARGET_FILE"
+else
+    echo "[*] Opening existing schematic: $TARGET_FILE"
+fi
+
+# ==============================================================================
+# Launch gedit via MobaXterm X11 Server
+# ==============================================================================
+
+if command -v gedit &> /dev/null; then
+    echo "[+] Launching gedit in MobaXterm GUI..."
+    gedit "$TARGET_FILE" > /dev/null 2>&1 &
+else
+    # Fallback if gedit is not installed
+    EDITOR_CMD="${EDITOR:-vim}"
+    "$EDITOR_CMD" "$TARGET_FILE"
+fi

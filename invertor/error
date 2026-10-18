@@ -1,0 +1,7 @@
+#!/bin/bash
+# ==============================================================================
+# CLI Utility: Trigger Diagnostics Engine
+# Usage: ./error [optional_log_path]
+# ==============================================================================
+
+./script/utils/error_parser.sh "$1"

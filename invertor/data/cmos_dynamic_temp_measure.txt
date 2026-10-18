@@ -1,0 +1,6 @@
+temp_val  i_avg   temper   alter#
+-40.0000  failed  25.0000  1
+0.        failed  25.0000  1
+25.0000   failed  25.0000  1
+85.0000   failed  25.0000  1
+125.0000  failed  25.0000  1

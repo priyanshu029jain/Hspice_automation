@@ -1,0 +1,2 @@
+i_avg_dynamic  i_peak_dynamic  p_dynamic  energy_per_cycle  failed  failed  failed  failed
+25.0000        1

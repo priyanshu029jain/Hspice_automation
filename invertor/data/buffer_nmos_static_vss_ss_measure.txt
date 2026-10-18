@@ -1,0 +1,5 @@
+vss_val    i_leak_low  i_leak_high  i_leak_max  p_static_max  p_static_in_low  p_static_in_high  p_static_avg
+0.         failed      failed       failed      failed        failed           failed            failed
+5.000e-02  failed      failed       failed      failed        failed           failed            failed
+0.1000     failed      failed       failed      failed        failed           failed            failed
+0.1500     failed      failed       failed      failed        failed           failed            failed

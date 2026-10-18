@@ -1,0 +1,9 @@
+vdd_val  i_avg_dynamic  i_peak_dynamic  p_dynamic  energy_per_cycle
+0.6000   failed         failed          failed     failed
+0.7000   failed         failed          failed     failed
+0.8000   failed         failed          failed     failed
+0.9000   failed         failed          failed     failed
+1.0000   failed         failed          failed     failed
+1.2000   failed         failed          failed     failed
+1.4000   failed         failed          failed     failed
+1.7000   failed         failed          failed     failed

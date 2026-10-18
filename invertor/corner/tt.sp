@@ -1,0 +1,5 @@
+* Typical NMOS, Typical PMOS
+.PARAM VTH_OFFSET_N = 0.0
+.PARAM VTH_OFFSET_P = 0.0
+.PARAM UTE_N_VAL     = -1.5
+.PARAM UTE_P_VAL     = -1.5

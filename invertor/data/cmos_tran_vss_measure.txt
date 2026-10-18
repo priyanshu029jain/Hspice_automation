@@ -1,0 +1,5 @@
+vss_val    t_propagation  temper   alter#
+0.         failed         25.0000  1
+5.000e-02  failed         25.0000  1
+0.1000     failed         25.0000  1
+0.1500     failed         25.0000  1

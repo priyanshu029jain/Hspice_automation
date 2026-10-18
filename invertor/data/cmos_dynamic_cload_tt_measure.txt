@@ -1,0 +1,12 @@
+cload      i_avg_dynamic  i_peak_dynamic  p_dynamic  energy_per_cycle
+1.000e-15  failed         failed          failed     failed
+2.000e-15  failed         failed          failed     failed
+3.000e-15  failed         failed          failed     failed
+5.000e-15  failed         failed          failed     failed
+1.000e-14  failed         failed          failed     failed
+2.000e-14  failed         failed          failed     failed
+3.000e-14  failed         failed          failed     failed
+1.000e-13  failed         failed          failed     failed
+3.000e-13  failed         failed          failed     failed
+5.000e-13  failed         failed          failed     failed
+8.000e-13  failed         failed          failed     failed

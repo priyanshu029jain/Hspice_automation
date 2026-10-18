@@ -1,0 +1,2 @@
+v_oh    v_ol    v_m     v_il    v_ih    nm_l    nm_h
+0.5519  0.2901  0.5151  failed  failed  failed  failed

@@ -1,0 +1,2 @@
+t_phl      t_plh       t_pd       t_skew     fall_time  rise_time
+5.011e-08  -4.997e-08  6.981e-11  1.001e-07  8.915e-11  9.801e-11

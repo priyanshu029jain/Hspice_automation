@@ -1,0 +1,6 @@
+$DATA1 SOURCE='PrimeSim HSPICE' VERSION='U-2023.03 linux6' PARAM_COUNT=0
+.TITLE '* automated master netlist'
+ total_out_noise  total_in_noise   onoise_1m        onoise_1g       
+ temper           alter#          
+  969.3615         1.238e+03        1.177e-06        8.508e-08      
+   25.0000        1               

@@ -1,0 +1,13 @@
+# Ignore generated simulation files
+waveform/sim_data/
+*.tr0
+*.sw0
+*.ac0
+*.mt0
+*.ms0
+*.ma0
+*.st0
+*.ic0
+*.lis
+top.sp
+sxcmd.log*

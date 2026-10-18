@@ -1,0 +1,6 @@
+r_load     out_noise_1m  in_noise_1m  peak_onoise  total_out_noise  total_in_noise
+100.0000   failed        failed       1.226e-07    129.0444         1.542e+04
+1.000e+03  failed        failed       1.203e-06    404.4636         5.199e+03
+1.000e+04  failed        failed       1.005e-05    761.6406         2.430e+03
+1.000e+05  failed        failed       3.310e-05    890.6632         2.037e+03
+1.000e+06  failed        failed       1.082e-06    527.9040         9.794e+03

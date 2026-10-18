@@ -1,0 +1,66 @@
+#!/bin/bash
+# ==============================================================================
+# Master Execution Pipeline (PVT Multi-Corner Aware)
+# Usage: ./run <schematic> <analysis> <parameter> <corner> [batch_mode]
+# Example: ./run nand tran vdd tt
+# ==============================================================================
+
+show_help() {
+    echo "======================================================================"
+    echo "                 HSPICE CLI Simulation Pipeline                       "
+    echo "======================================================================"
+    echo "Usage:"
+    echo "  ./run <schematic> <analysis> <parameter> <corner> [batch_mode]"
+    echo ""
+    echo "Arguments:"
+    echo "  <schematic>  Name of the circuit netlist in ./schematics/ (e.g., inverter, nand)"
+    echo "  <analysis>   Type of simulation: dc | tran | ac"
+    echo "  <parameter>  Target sweep variable: vdd | temp | cload | none"
+    echo "  <corner>     Process Corner: tt | ff | ss | sf | fs"
+    echo "  [batch_mode] (Optional) Set to '1' or 'batch' to suppress WaveView launch"
+    echo ""
+    echo "Examples:"
+    echo "  ./run nand tran vdd tt        -> Run transient analysis on NAND gate"
+    echo "  ./run inverter dc temp ff     -> Run DC sweep across temp in FF corner"
+    echo "  ./run nand tran vdd tt 1      -> Silent run (used by ./runall sweeper)"
+    echo "======================================================================"
+    exit 0
+}
+
+# Check for help flags or zero arguments
+if [ -z "$1" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    show_help
+fi
+
+# 1. Parse arguments (defaults: cmos dc none tt)
+source ./script/run/parse_args.sh "$1" "$2" "$3" "$4" || exit 1
+
+# Capture optional batch mode flag (5th argument)
+BATCH_MODE="$5"
+
+# 2. Build top.sp netlist with Corner & Sweep configuration
+./script/run/build_top.sp.sh
+
+# 3. Execute HSPICE Simulation & Diagnostic Error Hook
+source ./script/run/run_hspice.sh
+
+# Intercept simulation errors or fatal crashes
+if [ $? -ne 0 ] || grep -q -i "\*\*error\*\*" "./output/${SCHEM_NAME}_${ANALYSIS_NAME}_${PARAM_NAME}_${CORNER_NAME}.lis" 2>/dev/null; then
+    echo ""
+    echo "[!] Simulation failed! Launching diagnostic parser..."
+    echo ""
+    ./error "./output/${SCHEM_NAME}_${ANALYSIS_NAME}_${PARAM_NAME}_${CORNER_NAME}.lis"
+    exit 1
+fi
+
+# 4. Format measurement output into clean table in ./data/
+./script/run/format_measure.sh
+
+# 5. Display formatted characterization report in terminal
+./script/run/display.sh "$SCHEM_NAME" "$ANALYSIS_NAME" "$PARAM_NAME" "$CORNER_NAME"
+
+# 6. Launch WaveView ONLY if NOT in batch mode
+if [ "$BATCH_MODE" != "1" ] && [ "$BATCH_MODE" != "batch" ]; then
+    ./script/run/launch_wv.sh
+fi
+

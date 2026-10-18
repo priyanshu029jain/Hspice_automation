@@ -1,0 +1,5 @@
+l_mos      out_noise_1m  in_noise_1m  peak_onoise  total_out_noise  total_in_noise
+6.500e-08  failed        failed       3.711e-05    969.3615         1.238e+03
+9.000e-08  failed        failed       6.215e-06    582.0426         1.760e+03
+1.300e-07  failed        failed       1.931e-06    446.6551         1.850e+03
+1.800e-07  failed        failed       1.215e-06    388.4044         1.539e+03
