@@ -41,7 +41,7 @@ invertor/
 └── top.sp               # Generated master netlist (rewritten on every run)
 ```
 
-The process model file is [`../65nm.pm`](../65nm.pm), a customized PTM 65nm BSIM4 model. Every netlist loads it with `.INCLUDE`.
+The process model file is [`65nm.pm`](65nm.pm), a customized PTM 65nm BSIM4 model. Every netlist loads it with `.INCLUDE`.
 
 ---
 

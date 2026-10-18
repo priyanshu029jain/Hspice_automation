@@ -8,7 +8,7 @@
 .PARAM L_mos = 65N
 
 * Include Process Model File
-.INCLUDE '../65nm.pm'
+.INCLUDE '65nm.pm'
 
 * Power Supply Sources (Referenced to global 0)
 V_VDD VDD 0 DC 'VDD_VAL'

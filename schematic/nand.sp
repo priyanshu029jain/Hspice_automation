@@ -1,29 +1,5 @@
-#!/bin/bash
-# ==============================================================================
-# CLI Utility: Open or Create a Complete Testbench-Ready Netlist
-# Features: Built-in HSPICE Syntax Cheat Sheet + gedit (MobaXterm GUI) Support
-# Usage: ./open <schematic_name>
-# Example: ./open nand
-# ==============================================================================
-
-SCHEM_DIR="./schematic"
-mkdir -p "$SCHEM_DIR"
-
-if [ -z "$1" ]; then
-    echo "[!] Error: Schematic name missing."
-    echo "    Usage: ./open <schematic_name>"
-    echo "    Example: ./open nand"
-    exit 1
-fi
-
-SCHEM_NAME="$1"
-TARGET_FILE="$SCHEM_DIR/${SCHEM_NAME}.sp"
-
-# Generate template if file does not exist
-if [ ! -f "$TARGET_FILE" ]; then
-    cat << EOF > "$TARGET_FILE"
 * ==============================================================================
-* Schematic: ${SCHEM_NAME}
+* Schematic: nand
 * Auto-generated CLI Characterization Template
 * ==============================================================================
 *
@@ -62,7 +38,7 @@ if [ ! -f "$TARGET_FILE" ]; then
 .PARAM R_LOAD  = 10K
 
 * Include Process Model File
-.INCLUDE '../65nm.pm'
+.INCLUDE '65nm.pm'
 
 * Independent Power Supply Sources
 V_VDD VDD 0 DC 'VDD_VAL'
@@ -72,26 +48,11 @@ V_VSS VSS 0 DC 'VSS_VAL'
 Cout OUT VSS 'Cload'
 
 * --- Transistor Netlist / Devices ---
-* Subcircuit / Transistor instances for ${SCHEM_NAME}
-MP1 OUT IN VDD VDD PMOS L='L_mos' W='W_pmos'
-MN1 OUT IN VSS VSS NMOS L='L_mos' W='W_nmos'
+* Subcircuit / Transistor instances for nand
+MP1 imo IN VDD VDD PMOS L='L_mos' W='W_pmos'
+MN1 imo IN VSS VSS NMOS L='L_mos' W='W_nmos'
+
+MP2 OUT imo VDD VDD PMOS L='L_mos' W='W_pmos'
+MN2 OUT imo VSS VSS NMOS L='L_mos' W='W_nmos'
 
 .END
-EOF
-    echo "[+] Generated testbench template: $TARGET_FILE"
-else
-    echo "[*] Opening existing schematic: $TARGET_FILE"
-fi
-
-# ==============================================================================
-# Launch gedit via MobaXterm X11 Server
-# ==============================================================================
-
-if command -v gedit &> /dev/null; then
-    echo "[+] Launching gedit in MobaXterm GUI..."
-    gedit "$TARGET_FILE" > /dev/null 2>&1 &
-else
-    # Fallback if gedit is not installed
-    EDITOR_CMD="${EDITOR:-vim}"
-    "$EDITOR_CMD" "$TARGET_FILE"
-fi
